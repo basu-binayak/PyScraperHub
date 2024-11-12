@@ -13,6 +13,7 @@ Web scraping usually involves the following steps:
 3. **Locating and Extracting Data**: Using HTML tags, attributes, and classes (like `<div>`, `<span>`, `class="title"`, etc.), the scraper pinpoints and extracts the relevant data.
 4. **Storing the Data**: The extracted data is then organized and stored in a structured format, such as CSV, JSON, or a database.
 
+
 ## Example Use Cases for Web Scraping
 - **Price Comparison**: Aggregating product prices from different e-commerce sites.
 - **Market Research**: Collecting data on competitors, customer reviews, or trends.
@@ -20,10 +21,12 @@ Web scraping usually involves the following steps:
 - **Job Listings**: Scraping job listings from various job boards for data analysis.
 - **Real Estate Listings**: Extracting property data for analysis or listing on another platform.
 
+
 ## Tools and Libraries for Web Scraping
 There are various tools and libraries designed for web scraping, depending on the level of control and the programming language you prefer:
 - **Python Libraries**: BeautifulSoup, Scrapy, Selenium (for JavaScript-heavy sites).
 - **Dedicated Tools**: Octoparse, ParseHub, or web scraping APIs like ScraperAPI.
+
 
 ## Ethical and Legal Considerations
 Web scraping has legal and ethical implications, as some websites have terms of service prohibiting automated access. It's important to:
@@ -32,6 +35,7 @@ Web scraping has legal and ethical implications, as some websites have terms of 
 - **Abide by Terms of Service**: Ensure that your scraping practices comply with the website’s terms of service and applicable laws.
 
 In summary, web scraping is a powerful tool for gathering data automatically from websites. However, it should be done responsibly and ethically to ensure respect for site owners and users.
+---
 
 # Introducing XPath and CSS Selectors to process markup documents
 
@@ -107,6 +111,8 @@ In summary, web scraping is a powerful tool for gathering data automatically fro
 
 In summary, HTML is ideal for content and presentation on the web, while XML is ideal for defining and structuring data for storage and exchange. Both markup languages are essential in web development, though they serve distinct purposes.
 
+---
+
 ## Document Object Model (DOM)
 
 The **Document Object Model (DOM)** is a programming interface for web documents, representing the structure, style, and content of a document in a **tree-like structure**. It allows developers to access, manipulate, and modify the content and structure of HTML and XML documents dynamically. The DOM is a key concept in web development, as it enables interactive and dynamic websites by letting developers update content, style, and behavior of web pages on the fly.
@@ -153,6 +159,8 @@ Document
 
 The DOM is a foundational technology in web development that enables a wide range of functionalities on websites. Through DOM manipulation, developers can create responsive and dynamic web applications that can adjust in real time to user interactions and data updates, providing a more engaging experience for users.
 
+---
+
 ## XPath in detail
 
 Let’s walk through **XPath** in detail with an example XML document. XPath (XML Path Language) is a query language for selecting and navigating nodes in an XML document. It is used widely to extract specific data from XML documents based on a structured path.
@@ -190,7 +198,8 @@ We’ll use an XML document that represents a bookstore inventory, with elements
 </bookstore>
 ```
 
----
+(Use <a href="https://codebeautify.org/Xpath-Tester">XPath Tester</a> to test the Xpath statements below!)
+
 
 ### XPath Syntax and Components
 
@@ -259,7 +268,7 @@ XPath has several built-in functions that allow for more advanced querying.
 Axes define the relationship between the current node and other nodes.
 
 - **child**: Selects child elements of the current node.
-    - **Example**: `/bookstore/book/child::title`
+    - **Example**: `//book/child::title`
     - **Explanation**: Selects the `<title>` elements that are direct children of `<book>` elements.
 
 - **parent**: Selects the parent of the current node.
@@ -277,6 +286,44 @@ Axes define the relationship between the current node and other nodes.
 - **following-sibling**: Selects all siblings after the current node.
     - **Example**: `//book[author='F. Scott Fitzgerald']/following-sibling::book`
     - **Explanation**: Selects all `<book>` elements that appear after the `<book>` element with author "F. Scott Fitzgerald".
+
+### If Advanced Axes doesnt work!
+If certain XPath expressions using axes like `ancestor::`, `descendant::`, `parent::`, and `following-sibling::` are not working, we can replace them with alternative XPath expressions that achieve the same result without relying on these axes. Here’s a revised list with alternative solutions.
+
+#### Revised XPath Expressions Without Using Advanced Axes
+
+
+- **child**: Selects child elements of the current node.
+    - **Example**: `//book/title`
+    - **Explanation**: Selects `<title>` elements that are direct children of `<book>` elements.
+    - **No change needed**, as this does not rely on any special axis and should work reliably.
+
+
+- **parent**: Selects the parent of the current node.
+    - **Original Example**: `//title/parent::book`
+    - **Revised Example**: `//book[title]`
+    - **Explanation**: Selects all `<book>` elements that contain a `<title>` element. This avoids the `parent::` axis by selecting `<book>` elements based on the presence of a `<title>` child.
+        > Note tha if the XPath is `//book[title = 'The Sun and Her Flowers']` , then it selects the `<book>` element that has the `<title>` element and the text inside the title is `The Sub and Her Flowers`
+
+
+- **ancestor**: Selects all ancestor elements (parents, grandparents, etc.) of the current node.
+    - **Original Example**: `//price/ancestor::bookstore`
+    - **Revised Example**: `/bookstore[.//price]`
+    - **Explanation**: Selects the `<bookstore>` element if it contains any `<price>` element, avoiding the `ancestor::` axis by checking if `<price>` exists as a descendant within `<bookstore>`.
+        > Note that in the earlier example, where we deal with parent node, writing the XPath as `//book[.//title]` gives use the same result! This follows the ancestor rule that we just stated. 
+
+
+- **descendant**: Selects all descendants (children, grandchildren, etc.) of the current node.
+    - **Original Example**: `/bookstore/descendant::title`
+    - **Revised Example**: `/bookstore//title`
+    - **Explanation**: Selects all `<title>` elements within `<bookstore>`, using `//title` to find all descendant `<title>` elements under `<bookstore>`, which achieves the same result without `descendant::`.
+
+
+- **following-sibling**: Selects all siblings after the current node.
+    - **Original Example**: `//book[author='F. Scott Fitzgerald']/following-sibling::book`
+    - **Revised Example**: `(//book[author='F. Scott Fitzgerald'])[1]/following::book`
+    - **Explanation**: Selects all `<book>` elements that appear after the first `<book>` with `author="F. Scott Fitzgerald"`. Here, `following::book` will select any `<book>` nodes that appear after the specified `<book>`, not just direct siblings.
+
 
 ### 6. **Logical Operators**
 
@@ -329,10 +376,6 @@ Wildcards allow for flexible selection of nodes without specifying exact names.
     - **Example**: `//book/@*`
     - **Explanation**: Selects all attributes of `<book>` elements.
     - **Result**: `category` and `id` attributes of each `<book>`
-
-
-
----
 
 ### Summary Table of XPath Examples
 
