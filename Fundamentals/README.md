@@ -65,8 +65,6 @@ In summary, web scraping is a powerful tool for gathering data automatically fro
 </html>
 ```
 
----
-
 ### XML: eXtensible Markup Language
 
 **Purpose**: XML is a flexible markup language used primarily for **storing** and **transporting** data in a structured format.
@@ -89,7 +87,6 @@ In summary, web scraping is a powerful tool for gathering data automatically fro
 </bookstore>
 ```
 
----
 
 ### Key Differences Between HTML and XML
 
@@ -102,7 +99,6 @@ In summary, web scraping is a powerful tool for gathering data automatically fro
 | **Usage of Attributes**  | Commonly used to add style and behavior (`id`, `class`)    | Used to store additional data but not commonly for presentation|
 | **Data vs. Presentation**| Presentation-oriented                                      | Data-oriented                                                  |
 
----
 
 ### Use Cases
 
@@ -111,4 +107,49 @@ In summary, web scraping is a powerful tool for gathering data automatically fro
 
 In summary, HTML is ideal for content and presentation on the web, while XML is ideal for defining and structuring data for storage and exchange. Both markup languages are essential in web development, though they serve distinct purposes.
 
-## 
+## Document Object Model (DOM)
+
+The **Document Object Model (DOM)** is a programming interface for web documents, representing the structure, style, and content of a document in a **tree-like structure**. It allows developers to access, manipulate, and modify the content and structure of HTML and XML documents dynamically. The DOM is a key concept in web development, as it enables interactive and dynamic websites by letting developers update content, style, and behavior of web pages on the fly.
+
+### Key Points About the DOM:
+1. **Tree Structure**: The DOM represents the document as a hierarchical tree of nodes, where each node corresponds to a part of the document, such as an HTML element, attribute, or text.
+2. **Programming Interface**: Using languages like JavaScript, developers can interact with the DOM to change or retrieve information from the document.
+3. **Dynamic and Live**: The DOM is a live representation, meaning that any change made to the DOM is immediately reflected in the visible web page.
+
+### Structure of the DOM
+
+In the DOM tree structure:
+- **Document**: The top node represents the entire HTML or XML document.
+- **Element Nodes**: Each HTML tag (like `<div>`, `<h1>`, `<p>`, etc.) becomes an element node.
+- **Text Nodes**: The actual text within an element is represented as a text node.
+- **Attribute Nodes**: Each HTML attribute (like `id`, `class`, `href`, etc.) is represented as an attribute node.
+
+For example, consider the following HTML document:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample Page</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+    <p>This is a sample paragraph.</p>
+</body>
+</html>
+```
+
+The DOM tree for this HTML would look like this:
+
+```
+Document
+└── html
+    ├── head
+    │   └── title ("Sample Page")
+    └── body
+        ├── h1 ("Hello, World!")
+        └── p ("This is a sample paragraph.")
+```
+
+The DOM is a foundational technology in web development that enables a wide range of functionalities on websites. Through DOM manipulation, developers can create responsive and dynamic web applications that can adjust in real time to user interactions and data updates, providing a more engaging experience for users.
+
