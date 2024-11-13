@@ -398,77 +398,171 @@ These XPath expressions cover the essential components, making XPath a powerful 
 
 ## CSS Selectors 
 
-The most common CSS Selector and their types are as follows:
+Here’s a comprehensive list of common CSS selectors along with their corresponding XPath expressions and examples. The XPath is provided so that it is easy for the reader to compare the two!
 
-1. **Type Selector**: Selects elements by tag name.
-2. **Descendant Selector**: Selects elements that are descendants of another element.
-3. **Child Selector**: Selects elements that are direct children of another element.
-4. **ID Selector**: Selects an element by its ID.
-5. **Class Selector**: Selects elements by their class attribute.
-6. **Adjacent Sibling Selector**: Selects an element that is an immediate sibling.
-7. **General Sibling Selector**: Selects all siblings of a specified element.
-8. **First Child/Only Child/Last Child Selectors**: Selects the first, only, or last child element of its parent.
-9. **Nth-Child/Nth-of-Type Selectors**: Selects elements based on their position in the parent.
-10. **Attribute Selectors**: Selects elements based on the presence or value of attributes, including:
-   - Attribute value (`[for]`)
-   - Attribute starts with (`[for^="x"]`)
-   - Attribute ends with (`[for$="x"]`)
-   - Attribute contains (`[for*="x"]`)
+---
 
-There are also pseudo-classes and combinators (`>`, `+`, `~`) and how to combine different selectors.
+### 1. **Type Selector**
+   - **CSS**: `element`
+   - **Example**: `div`
+   - **XPath**: `//div`
+   - **Explanation**: Selects all `<div>` elements.
 
-Here’s a comprehensive table that matches each CSS selector with its equivalent XPath expression, based on common CSS selectors provided in your cheatsheet.
+### 2. **ID Selector**
+   - **CSS**: `#id`
+   - **Example**: `#header`
+   - **XPath**: `//*[@id='header']`
+   - **Explanation**: Selects an element with the `id` attribute equal to `header`.
 
-| **CSS Selector**                     | **Description**                                            | **XPath Equivalent**                                            |
-|--------------------------------------|------------------------------------------------------------|-----------------------------------------------------------------|
-| `element`                            | Selects all elements with the given tag (e.g., `div`)       | `//element` (e.g., `//div`)                                     |
-| `.class`                             | Selects all elements with the given class                   | `//*[contains(concat(' ', @class, ' '), ' class ')]`            |
-| `#id`                                | Selects the element with the given ID                       | `//*[@id='id']`                                                 |
-| `element.class`                      | Selects all elements with the tag and class                 | `//element[contains(concat(' ', @class, ' '), ' class ')]`       |
-| `element#id`                         | Selects the element with the tag and ID                     | `//element[@id='id']`                                           |
-| `element[attr]`                      | Selects all elements with the given attribute               | `//element[@attr]`                                              |
-| `element[attr="value"]`              | Selects all elements where the attribute equals a value     | `//element[@attr='value']`                                      |
-| `element[attr^="value"]`             | Selects all elements where the attribute starts with value  | `//element[starts-with(@attr, 'value')]`                        |
-| `element[attr$="value"]`             | Selects all elements where the attribute ends with value    | `//element[substring(@attr, string-length(@attr) - string-length('value') + 1) = 'value']` |
-| `element[attr*="value"]`             | Selects all elements where the attribute contains value     | `//element[contains(@attr, 'value')]`                           |
-| `element > child`                    | Selects direct children of the element                      | `//element/child`                                               |
-| `element child`                      | Selects all descendants of the element                      | `//element//child`                                              |
-| `element + sibling`                  | Selects the next sibling of the element                     | `//element/following-sibling::*[1][self::sibling]`              |
-| `element ~ sibling`                  | Selects all siblings after the element                      | `//element/following-sibling::sibling`                          |
-| `:first-child`                       | Selects the first child of an element                       | `//element/*[1]`                                                |
-| `:last-child`                        | Selects the last child of an element                        | `//element/*[last()]`                                           |
-| `:nth-child(n)`                      | Selects the nth child of an element                         | `//element/*[n]`                                                |
-| `:nth-last-child(n)`                 | Selects the nth child from the end                          | `//element/*[last() - n + 1]`                                   |
-| `:nth-of-type(n)`                    | Selects the nth element of its type                         | `//element[n]`                                                  |
-| `element:not(selector)`              | Selects elements that don’t match the given selector        | `//element[not(condition)]`                                     |
-| `:first-of-type`                     | Selects the first element of its type                       | `//element[1]`                                                  |
-| `:last-of-type`                      | Selects the last element of its type                        | `//element[last()]`                                             |
-| `element:empty`                      | Selects elements with no children                           | `//element[not(node())]`                                        |
-| `element:only-child`                 | Selects an element if it is the only child of its parent    | `//element[count(preceding-sibling::*) = 0 and count(following-sibling::*) = 0]` |
-| `element:nth-child(odd)`             | Selects odd-numbered children                              | `//element[position() mod 2 = 1]`                               |
-| `element:nth-child(even)`            | Selects even-numbered children                             | `//element[position() mod 2 = 0]`                               |
+### 3. **Class Selector**
+   - **CSS**: `.class`
+   - **Example**: `.container`
+   - **XPath**: `//*[contains(@class, 'container')]`
+   - **Explanation**: Selects elements with a `class` attribute containing `container`.
+    - Note:
+        - The issue with `//*[contains(@class, 'fiction')]` is that `contains()` checks for any substring match within the `class` attribute. Therefore, it will match elements with classes like `"nonfiction"` as well, since `"fiction"` is a substring of `"nonfiction"`.
 
-### Notes:
-1. **Class Selector**: In XPath, class attributes are often space-separated, so to match exactly, XPath uses the `contains()` function with `concat()` to avoid partial matches.
-   
-2. **Nth Child Selectors**: XPath doesn't have a direct equivalent to CSS's `nth-child`, but it can be simulated using `position()` or `last()` functions.
+        - To specifically select elements with the class `fiction` and avoid matching `nonfiction`, you can use one of the following approaches:
 
-3. **Sibling Selectors**: For adjacent siblings, XPath selects the first following sibling, while general sibling selectors get all following siblings.
+        - **Use Spaces to Match Whole Words**
 
-4. **Attribute Selectors**: XPath handles attribute values using functions like `starts-with()`, `contains()`, and substring methods.
+            - You can use spaces around `fiction` to ensure it matches only whole words within the `class` attribute.
 
-### Example
-If you want to select all `<a>` elements with the class `button` and an `href` attribute that starts with `https` in both CSS and XPath:
+            ```xpath
+            //*[contains(concat(' ', @class, ' '), ' fiction ')]
+            ```
 
-- **CSS**:
-   ```css
-   a.button[href^="https"]
-   ```
+            - **Explanation**: `concat(' ', @class, ' ')` adds spaces before and after the `class` attribute value, so only exact matches (with spaces) are selected. This prevents partial matches like `"nonfiction"`.
 
-- **XPath**:
-   ```xpath
-   //a[contains(concat(' ', @class, ' '), ' button ')][starts-with(@href, 'https')]
-   ```
+            - Example
 
-This table should cover most common CSS selectors and their XPath equivalents! Let me know if you need further examples or explanations.
+                Given the following HTML:
+                ```html
+                <div class="fiction">Fiction Book</div>
+                <div class="nonfiction">Non-Fiction Book</div>
+                <div class="science fiction">Science Fiction Book</div>
+                ```
 
+                The XPath `//*[contains(concat(' ', @class, ' '), ' fiction ')]` would select:
+                    - `<div class="fiction">Fiction Book</div>`
+                    - `<div class="science fiction">Science Fiction Book</div>`
+                    But it will not match:
+                    - `<div class="nonfiction">Non-Fiction Book</div>`
+
+### 4. **Universal Selector**
+   - **CSS**: `*`
+   - **Example**: `*`
+   - **XPath**: `//*`
+   - **Explanation**: Selects all elements in the document.
+
+### 5. **Descendant Selector**
+   - **CSS**: `ancestor descendant`
+   - **Example**: `div p`
+   - **XPath**: `//div//p`
+   - **Explanation**: Selects all `<p>` elements that are descendants of `<div>` elements.
+
+### 6. **Child Selector**
+   - **CSS**: `parent > child`
+   - **Example**: `ul > li`
+   - **XPath**: `//ul/li`
+   - **Explanation**: Selects all `<li>` elements that are direct children of `<ul>` elements.
+
+### 7. **Adjacent Sibling Selector**
+   - **CSS**: `element1 + element2`
+   - **Example**: `h1 + p`
+   - **XPath**: `//h1/following-sibling::*[1][self::p]`
+   - **Explanation**: Selects the first `<p>` element immediately following an `<h1>` element.
+
+### 8. **General Sibling Selector**
+   - **CSS**: `element1 ~ element2`
+   - **Example**: `h1 ~ p`
+   - **XPath**: `//h1/following-sibling::p`
+   - **Explanation**: Selects all `<p>` elements that are siblings after an `<h1>` element.
+
+### 9. **Attribute Selector**
+   - **CSS**: `[attribute]`
+   - **Example**: `[type]`
+   - **XPath**: `//*[@type]`
+   - **Explanation**: Selects all elements with a `type` attribute.
+
+### 10. **Attribute Equals Selector**
+   - **CSS**: `[attribute=value]`
+   - **Example**: `[type="text"]`
+   - **XPath**: `//*[@type='text']`
+   - **Explanation**: Selects elements with a `type` attribute equal to `text`.
+
+### 11. **Attribute Starts With Selector**
+   - **CSS**: `[attribute^=value]`
+   - **Example**: `[type^="te"]`
+   - **XPath**: `//*[starts-with(@type, 'te')]`
+   - **Explanation**: Selects elements with a `type` attribute starting with `te`.
+
+### 12. **Attribute Ends With Selector**
+   - **CSS**: `[attribute$=value]`
+   - **Example**: `[type$="xt"]`
+   - **XPath**: `//*[substring(@type, string-length(@type) - string-length('xt') + 1) = 'xt']`
+   - **Explanation**: Selects elements with a `type` attribute ending with `xt`.
+
+### 13. **Attribute Contains Selector**
+   - **CSS**: `[attribute*=value]`
+   - **Example**: `[type*="ex"]`
+   - **XPath**: `//*[contains(@type, 'ex')]`
+   - **Explanation**: Selects elements with a `type` attribute containing `ex`.
+
+### 14. **First Child Pseudo-Class**
+   - **CSS**: `:first-child`
+   - **Example**: `p:first-child`
+   - **XPath**: `*/p[1]`
+   - **Explanation**: Selects the first `<p>` element among siblings.
+
+### 15. **Last Child Pseudo-Class**
+   - **CSS**: `:last-child`
+   - **Example**: `p:last-child`
+   - **XPath**: `*/p[last()]`
+   - **Explanation**: Selects the last `<p>` element among siblings.
+
+### 16. **Nth Child Pseudo-Class**
+   - **CSS**: `:nth-child(n)`
+   - **Example**: `li:nth-child(2)`
+   - **XPath**: `*/li[2]`
+   - **Explanation**: Selects the second `<li>` element among siblings.
+
+### 17. **Only Child Pseudo-Class**
+   - **CSS**: `:only-child`
+   - **Example**: `p:only-child`
+   - **XPath**: `*/p[count(preceding-sibling::*) = 0 and count(following-sibling::*) = 0]`
+   - **Explanation**: Selects `<p>` elements that are the only child of their parent.
+
+### 18. **First of Type Selector**
+   - **CSS**: `:first-of-type`
+   - **Example**: `p:first-of-type`
+   - **XPath**: `//p[1]`
+   - **Explanation**: Selects the first `<p>` element of its type within a parent.
+
+### 19. **Last of Type Selector**
+   - **CSS**: `:last-of-type`
+   - **Example**: `p:last-of-type`
+   - **XPath**: `//p[last()]`
+   - **Explanation**: Selects the last `<p>` element of its type within a parent.
+
+### 20. **Nth of Type Selector**
+   - **CSS**: `:nth-of-type(n)`
+   - **Example**: `li:nth-of-type(2)`
+   - **XPath**: `//li[2]`
+   - **Explanation**: Selects the second `<li>` element of its type within a parent.
+
+### 21. **Empty Selector**
+   - **CSS**: `:empty`
+   - **Example**: `p:empty`
+   - **XPath**: `//p[not(node())]`
+   - **Explanation**: Selects `<p>` elements with no children (elements or text).
+
+### 22. **Negation Pseudo-Class**
+   - **CSS**: `:not(selector)`
+   - **Example**: `p:not(.intro)`
+   - **XPath**: `//p[not(contains(@class, 'intro'))]`
+   - **Explanation**: Selects `<p>` elements that do not have the class `intro`.
+
+---
+
+This list includes some of the most common CSS selectors with equivalent XPath expressions. Note that while most CSS selectors can be converted to XPath, some require workarounds in XPath to achieve the same effect.
