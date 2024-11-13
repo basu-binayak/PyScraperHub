@@ -419,10 +419,10 @@ Here’s a comprehensive list of common CSS selectors along with their correspon
    - **Example**: `.container`
    - **XPath**: `//*[contains(@class, 'container')]`
    - **Explanation**: Selects elements with a `class` attribute containing `container`.
-   - ISSEUE with the above mentioned statement!
+   - ISSUE with the above mentioned statement!
         - The issue with `//*[contains(@class, 'fiction')]` is that `contains()` checks for any substring match within the `class` attribute. Therefore, it will match elements with classes like `"nonfiction"` as well, since `"fiction"` is a substring of `"nonfiction"`.
 
-        - To specifically select elements with the class `fiction` and avoid matching `nonfiction`, you can use one of the following approaches:
+        - To specifically select elements with the class `fiction` and avoid matching `nonfiction`, you can use the following approach:
 
         - **Use Spaces to Match Whole Words**
 
