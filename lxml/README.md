@@ -1,6 +1,7 @@
 # XPath in detail
 
 Let’s walk through **XPath** in detail with an example XML document. XPath (XML Path Language) is a query language for selecting and navigating nodes in an XML document. It is used widely to extract specific data from XML documents based on a structured path.
+
 ---
 ## Example XML Document
 
