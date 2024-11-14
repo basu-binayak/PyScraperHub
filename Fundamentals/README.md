@@ -459,13 +459,13 @@ Here’s a comprehensive list of common CSS selectors along with their correspon
 ### 5. **Descendant Selector**
    - **CSS**: `ancestor descendant`
    - **Example**: `div p`
-   - **XPath**: `//div//p`
+   - **XPath**: `//div//p` or `div/descendant::p`
    - **Explanation**: Selects all `<p>` elements that are descendants of `<div>` elements.
 
 ### 6. **Child Selector**
    - **CSS**: `parent > child`
    - **Example**: `ul > li`
-   - **XPath**: `//ul/li`
+   - **XPath**: `//ul/li` or `ul/child::li`
    - **Explanation**: Selects all `<li>` elements that are direct children of `<ul>` elements.
 
 ### 7. **Adjacent Sibling Selector**
